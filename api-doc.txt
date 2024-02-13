@@ -1,0 +1,28 @@
+authentication
+POST/auth/Register 
+REQUEST BODY
+{
+    username          string    username must not exists
+    password*         string    password must contain only alphabet
+    ConfirmPassword*  string    password must be match a password
+    mobile*            string    phone number
+    email             string    email address 
+    firstname*        string    user first name
+    lastname*         string    user last name
+}
+
+RESPONSE 
+201
+{
+    accessToken     string      user token
+}
+400
+{
+    message         string      client message
+}
+500
+{
+    message         string      server error message
+}
+
+app.js>>authRoute>>authController

@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Age {
+  PUPPY
+  ADULT
+  SENIOR
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Status {
+  AVAILABLE
+  PENDING
+  ADOPTED
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  firstName String  @map("first_name")
+  lastName  String  @map("last_name")
+  mobile    String  @unique
+  role      Role    @default(USER)
+  adopt     Adopt[]
+
+  @@map("users")
+}
+
+model Dog {
+  id           Int      @id @default(autoincrement())
+  name         String
+  age          Age
+  gender       Gender
+  breedId      Int
+  breed        Breed    @relation(fields: [breedId], references: [id])
+  profileImage String   @map("profile_image")
+  description  String?  @db.Text
+  status       Status   @default(AVAILABLE)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp(0)
+  adopt        Adopt[]
+
+  @@map("dogs")
+}
+
+model Adopt {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  dogId  Int
+  dog    Dog  @relation(fields: [dogId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+}
+
+model Breed {
+  id       Int    @id @default(autoincrement())
+  dogBreed String @default("other") @map("dog_breed")
+  dog      Dog[]
+
+  @@map("breeds")
+}
