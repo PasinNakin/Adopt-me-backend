@@ -7,6 +7,7 @@ const notFound = require("./middlewares/not-found");
 const error = require("./middlewares/error");
 const rateLimit = require("./middlewares/rate-limit");
 const authRoute = require("./routes/auth-route");
+const dogRoute = require("./routes/dog-route");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(rateLimit);
 app.use(morgan("dev"));
 
 app.use("/auth", authRoute);
+app.use("/dog", dogRoute);
 
 app.use(notFound);
 app.use(error);
