@@ -5,6 +5,10 @@ const userService = require("../services/user-service");
 
 const authentiacate = catchError(async (req, res, next) => {
     const authorization = req.headers.authorization;
+    console.log(
+        authentiacate,
+        "-------------------------------------------------"
+    );
     if (!authorization || !authorization.startsWith("Bearer")) {
         createError("invalid authorization header", 401);
     }
