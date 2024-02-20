@@ -2,7 +2,6 @@ const fs = require("fs/promises");
 
 const catchError = require("../utils/catch-error");
 const dogService = require("../services/dog-service");
-const createError = require("../utils/create-error");
 const uploadService = require("../services/upload-service");
 
 exports.createDog = catchError(async (req, res, next) => {
@@ -14,4 +13,20 @@ exports.createDog = catchError(async (req, res, next) => {
     const newDog = await dogService.createDog(req.body);
 
     res.status(201).json({ newDog });
+});
+
+exports.getDogBreed = catchError(async (req, res, next) => {
+    const breed = await dogService.getDogBreed(req.body);
+
+    res.status(201).json({ breed });
+});
+
+exports.getAllDog = catchError(async (req, res, next) => {
+    const allDogWithBreed = await dogService.findDogWithBreed(req.body);
+    res.status(201).json({ allDogWithBreed });
+});
+
+exports.getDogById = catchError(async (req, res, next) => {
+    const dogWithId = await dogService.findDogById(+req.params.dogId);
+    res.status(201).json({ dogWithId });
 });

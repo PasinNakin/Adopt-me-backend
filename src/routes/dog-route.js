@@ -11,4 +11,8 @@ router.post(
     dogController.createDog
 );
 
+router.get("/getDogBreed", dogController.getDogBreed);
+router.get("/allDog", dogController.getAllDog);
+router.get("/profile/:dogId", dogController.getDogById);
+
 module.exports = router;
