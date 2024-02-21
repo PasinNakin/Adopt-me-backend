@@ -30,3 +30,13 @@ exports.getDogById = catchError(async (req, res, next) => {
     const dogWithId = await dogService.findDogById(+req.params.dogId);
     res.status(201).json({ dogWithId });
 });
+
+exports.updateDogById = catchError(async (req, res, next) => {
+    const data = await dogService.upDateDogById(req.body, +req.params.dogId);
+    res.status(200).json(data);
+});
+
+exports.deleteDogById = catchError(async (req, res, next) => {
+    const deleteDog = await dogService.deleteDogById(+req.params.dogId);
+    res.status(200).json(deleteDog);
+});

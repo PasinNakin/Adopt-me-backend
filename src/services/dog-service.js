@@ -12,7 +12,9 @@ exports.findDogWithBreed = () =>
     });
 
 exports.upDateDogById = (data, id) =>
-    prisma.dog.findUnique({ data, where: { id } });
+    prisma.dog.update({ data, where: { id } });
 
 exports.findDogById = (id) =>
     prisma.dog.findUnique({ where: { id }, include: { breed: true } });
+
+exports.deleteDogById = (id) => prisma.dog.delete({ where: { id } });
