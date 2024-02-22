@@ -8,6 +8,8 @@ const error = require("./middlewares/error");
 const rateLimit = require("./middlewares/rate-limit");
 const authRoute = require("./routes/auth-route");
 const dogRoute = require("./routes/dog-route");
+const adoptRoute = require("./routes/adopt-route");
+const authentiacate = require("./middlewares/authenticate");
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.use(morgan("dev"));
 
 app.use("/auth", authRoute);
 app.use("/dog", dogRoute);
+app.use("/adopt", authentiacate, adoptRoute);
 
 app.use(notFound);
 app.use(error);

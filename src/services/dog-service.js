@@ -19,13 +19,19 @@ exports.findDogById = (id) =>
 
 exports.deleteDogById = (id) => prisma.dog.delete({ where: { id } });
 
-exports.searchingDog = (searchData) =>
-    prisma.dog.findMany({
+exports.searchingDog = (searchData) => {
+    const { age, gender, breedId } = searchData;
+    const query = [];
+    if (age) query.push({ age });
+    if (gender) query.push({ gender });
+    if (breedId) query.push({ breedId: +breedId });
+
+    return prisma.dog.findMany({
         where: {
-            AND: [
-                { age: searchData.age },
-                { gender: searchData.gender },
-                { breedId: +searchData.breedId },
-            ],
+            AND: [...query],
         },
     });
+};
+
+exports.updateStatus = (dogId, data) =>
+    prisma.dog.update({ data, where: { id: dogId } });
