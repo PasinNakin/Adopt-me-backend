@@ -40,3 +40,10 @@ exports.deleteDogById = catchError(async (req, res, next) => {
     const deleteDog = await dogService.deleteDogById(+req.params.dogId);
     res.status(200).json(deleteDog);
 });
+
+exports.searchDog = catchError(async (req, res, next) => {
+    console.log(req.query, "-------------------");
+    const searchingDog = await dogService.searchingDog(req.query);
+    console.log(searchingDog, "CHECK RESULT");
+    res.status(200).json(searchingDog);
+});

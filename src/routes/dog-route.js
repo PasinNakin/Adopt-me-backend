@@ -14,6 +14,7 @@ router.post(
 router.get("/getDogBreed", dogController.getDogBreed);
 router.get("/allDog", dogController.getAllDog);
 router.get("/profile/:dogId", dogController.getDogById);
+router.get("/search", dogController.searchDog);
 
 router.patch("/update/:dogId", dogController.updateDogById);
 router.delete("/deleteDog/:dogId", dogController.deleteDogById);

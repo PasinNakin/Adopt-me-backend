@@ -9,7 +9,7 @@ exports.register = catchError(async (req, res, next) => {
     if (existsUser) {
         createError("email has already in use", 400);
     }
-    // console.log(req.body.email, "-------------------");
+
     req.body.password = await hashService.hash(req.body.password);
 
     const newUser = await userService.createUser(req.body);

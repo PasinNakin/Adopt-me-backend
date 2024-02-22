@@ -18,3 +18,14 @@ exports.findDogById = (id) =>
     prisma.dog.findUnique({ where: { id }, include: { breed: true } });
 
 exports.deleteDogById = (id) => prisma.dog.delete({ where: { id } });
+
+exports.searchingDog = (searchData) =>
+    prisma.dog.findMany({
+        where: {
+            AND: [
+                { age: searchData.age },
+                { gender: searchData.gender },
+                { breedId: +searchData.breedId },
+            ],
+        },
+    });
