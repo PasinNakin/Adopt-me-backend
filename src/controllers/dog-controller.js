@@ -42,8 +42,20 @@ exports.deleteDogById = catchError(async (req, res, next) => {
 });
 
 exports.searchDog = catchError(async (req, res, next) => {
-    console.log(req.query, "-------------------");
+    // console.log(req.query, "-------------------");
     const searchingDog = await dogService.searchingDog(req.query);
-    console.log(searchingDog, "CHECK RESULT");
+    // console.log(searchingDog, "CHECK RESULT");
     res.status(200).json(searchingDog);
+});
+
+exports.relationshipDog = catchError(async (req, res, next) => {
+    const ralation = await dogService.findRelationship(+req.params.dogId);
+    res.status(200).json(ralation);
+});
+
+exports.approveAdoptDog = catchError(async (req, res, next) => {
+    const data = await dogService.acceptToAdopted(+req.params.dogId, {
+        status: "ADOPTED",
+    });
+    res.status(200).json({ data });
 });

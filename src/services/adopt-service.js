@@ -5,9 +5,39 @@ exports.createAdopt = (data) => {
     return prisma.adopt.create({ data });
 };
 
-exports.deleteAdopt = (id) => prisma.adopt.delete({ id });
+exports.deleteAdopt = (dogId) => prisma.adopt.delete({ where: { dogId } });
 
 exports.checkExistAdopt = (dogId) =>
     prisma.adopt.findFirst({
         where: { dogId },
+    });
+
+const userfilter = { id: true, firstName: true, role: true };
+const dogfilter = {
+    id: true,
+    status: true,
+    name: true,
+    age: true,
+    profileImage: true,
+    gender: true,
+    description: true,
+};
+
+exports.findAdoptByUserId = (userId) =>
+    prisma.adopt.findMany({
+        where: { userId },
+        include: {
+            user: { select: userfilter },
+            dog: {
+                select: {
+                    ...dogfilter,
+                    breed: {
+                        select: {
+                            id: true,
+                            dogBreed: true,
+                        },
+                    },
+                },
+            },
+        },
     });

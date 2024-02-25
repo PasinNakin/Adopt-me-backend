@@ -21,7 +21,6 @@ exports.register = catchError(async (req, res, next) => {
 });
 
 exports.login = catchError(async (req, res, next) => {
-    console.log(req.body);
     const existUser = await userService.findUserByEmail(req.body.email);
     if (!existUser) {
         createError("invalid credential", 400);

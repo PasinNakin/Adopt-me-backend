@@ -33,5 +33,19 @@ exports.searchingDog = (searchData) => {
     });
 };
 
+exports.acceptToAdopted = (id, data) =>
+    prisma.dog.update({ data, where: { id } });
+
 exports.updateStatus = (dogId, data) =>
     prisma.dog.update({ data, where: { id: dogId } });
+
+exports.findRelationship = (id) =>
+    prisma.dog.findFirst({
+        where: { id },
+        select: {
+            id: true,
+            name: true,
+            status: true,
+            adopt: { select: { id: true, userId: true, dogId: true } },
+        },
+    });

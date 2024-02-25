@@ -66,7 +66,7 @@ model Adopt {
   id     Int  @id @default(autoincrement())
   userId Int
   user   User @relation(fields: [userId], references: [id])
-  dogId  Int
+  dogId  Int  @unique
   dog    Dog  @relation(fields: [dogId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)

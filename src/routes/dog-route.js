@@ -17,6 +17,7 @@ router.get("/profile/:dogId", dogController.getDogById);
 router.get("/search", dogController.searchDog);
 
 router.patch("/update/:dogId", dogController.updateDogById);
+router.patch("/acceptAdopt/:dogId", dogController.approveAdoptDog);
 router.delete("/deleteDog/:dogId", dogController.deleteDogById);
-
+router.get("/relationship/:dogId", dogController.relationshipDog);
 module.exports = router;

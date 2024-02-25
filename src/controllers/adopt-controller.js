@@ -4,8 +4,6 @@ const adoptService = require("../services/adopt-service");
 const dogService = require("../services/dog-service");
 
 exports.createAdopt = catchError(async (req, res, next) => {
-    console.log(req.body, "dodyyyyyyyyyyyyyyyyy");
-    console.log(req.user, "Userrrrrrrrrrrrrrrrrr");
     const { dogId } = req.body;
     const { id } = req.user;
     const existAdopt = await adoptService.checkExistAdopt(dogId);
@@ -16,4 +14,16 @@ exports.createAdopt = catchError(async (req, res, next) => {
     const newAdopt = await adoptService.createAdopt(data);
     await dogService.updateStatus(newAdopt.dogId, { status: "PENDING" });
     res.status(200).json({ newAdopt });
+});
+
+exports.findUserAdopt = catchError(async (req, res, next) => {
+    const data = await adoptService.findAdoptByUserId(req.user.id);
+    console.log(data);
+    res.status(200).json({ data });
+});
+
+exports.cancelAdopt = catchError(async (req, res, next) => {
+    const data = await adoptService.deleteAdopt(+req.params.dogId);
+    await dogService.updateStatus(data.dogId, { status: "AVAILABLE" });
+    res.status(200).json({ data });
 });
