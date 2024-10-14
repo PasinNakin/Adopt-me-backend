@@ -6,6 +6,8 @@ exports.createAdopt = (data) => {
 };
 
 exports.deleteAdopt = (dogId) => prisma.adopt.delete({ where: { dogId } });
+exports.findAdoptByDogId = (dogId) =>
+    prisma.adopt.findFirst({ where: { dogId } });
 
 exports.checkExistAdopt = (dogId) =>
     prisma.adopt.findFirst({

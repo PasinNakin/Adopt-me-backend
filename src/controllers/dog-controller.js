@@ -42,15 +42,16 @@ exports.deleteDogById = catchError(async (req, res, next) => {
 });
 
 exports.searchDog = catchError(async (req, res, next) => {
-    // console.log(req.query, "-------------------");
     const searchingDog = await dogService.searchingDog(req.query);
-    // console.log(searchingDog, "CHECK RESULT");
+    if (searchingDog.length === 0) {
+        return res.status(404).json({ message: "Your search not found." });
+    }
     res.status(200).json(searchingDog);
 });
 
 exports.relationshipDog = catchError(async (req, res, next) => {
-    const ralation = await dogService.findRelationship(+req.params.dogId);
-    res.status(200).json(ralation);
+    const relation = await dogService.findRelationship(+req.params.dogId);
+    res.status(200).json(relation);
 });
 
 exports.approveAdoptDog = catchError(async (req, res, next) => {

@@ -18,12 +18,17 @@ exports.createAdopt = catchError(async (req, res, next) => {
 
 exports.findUserAdopt = catchError(async (req, res, next) => {
     const data = await adoptService.findAdoptByUserId(req.user.id);
-    console.log(data);
+    // console.log(data);
     res.status(200).json({ data });
 });
 
 exports.cancelAdopt = catchError(async (req, res, next) => {
-    const data = await adoptService.deleteAdopt(+req.params.dogId);
-    await dogService.updateStatus(data.dogId, { status: "AVAILABLE" });
-    res.status(200).json({ data });
+    const adopt = await adoptService.findAdoptByDogId(+req.params.dogId);
+    // console.log(adopt.userId);
+    // console.log(req.user);
+    if (req.user.role === "ADMIN" || req.user.id === adopt.userId) {
+        const data = await adoptService.deleteAdopt(+req.params.dogId);
+        await dogService.updateStatus(data.dogId, { status: "AVAILABLE" });
+        res.status(200).json({ data });
+    }
 });

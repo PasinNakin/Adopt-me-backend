@@ -40,7 +40,7 @@ const createDogSchema = Joi.object({
     //     "any.required": "Image is required",
     // }),
 
-    description: Joi.string().optional(),
+    description: Joi.string().allow(""),
 });
 
 exports.validateCreateDog = validate(createDogSchema);
