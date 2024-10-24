@@ -42,3 +42,22 @@ exports.login = catchError(async (req, res, next) => {
 exports.getMe = (req, res, next) => {
     res.status(200).json({ user: req.user });
 };
+
+exports.editProfile = catchError(async (req, res, next) => {
+    if (
+        !req.body.id &&
+        !req.body.email &&
+        !req.body.password &&
+        !req.body.role
+    ) {
+        const existMobileNumber = await userService.findUserByEmail(
+            req.body.mobile
+        );
+        if (existMobileNumber) {
+            createError("This phone number is already in use.", 400);
+        }
+        const editUser = await userService.editUserById(req.user.id, req.body);
+        res.status(200).json(editUser);
+    }
+    res.status(403).json({ message: "Can not change this data" });
+});

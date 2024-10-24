@@ -10,3 +10,6 @@ exports.findUserByEmail = (emailOrMobile) =>
 exports.createUser = (data) => prisma.user.create({ data });
 
 exports.findUserById = (id) => prisma.user.findUnique({ where: { id } });
+
+exports.editUserById = (id, data) =>
+    prisma.user.update({ data, where: { id } });

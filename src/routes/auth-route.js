@@ -4,11 +4,12 @@ const {
     validateRegister,
     validateLogin,
 } = require("../middlewares/validator/validate-auth");
-const authentiacate = require("../middlewares/authenticate");
+const authenticate = require("../middlewares/authenticate");
 const router = express.Router();
 
 router.post("/register", validateRegister, authController.register);
 router.post("/login", validateLogin, authController.login);
-router.get("/me", authentiacate, authController.getMe);
+router.get("/me", authenticate, authController.getMe);
+router.patch("/editUser", authenticate, authController.editProfile);
 
 module.exports = router;
