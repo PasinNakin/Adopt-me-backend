@@ -5,9 +5,13 @@ const hashService = require("../services/hash-service");
 const jwtService = require("../services/jwt-service");
 
 exports.register = catchError(async (req, res, next) => {
-    const existsUser = await userService.findUserByEmail(req.body.email);
+    const existsUser = await userService.findUserByEmail(
+        req.body.email,
+        req.body.mobile
+    );
+
     if (existsUser) {
-        createError("email has already in use", 400);
+        createError("email or mobile number is already in use.", 400);
     }
 
     req.body.password = await hashService.hash(req.body.password);
@@ -50,6 +54,9 @@ exports.editProfile = catchError(async (req, res, next) => {
         !req.body.password &&
         !req.body.role
     ) {
+        if (req.user.mobile === req.body.mobile) {
+            delete req.body.mobile;
+        }
         const existMobileNumber = await userService.findUserByEmail(
             req.body.mobile
         );
