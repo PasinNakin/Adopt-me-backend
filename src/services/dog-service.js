@@ -6,10 +6,29 @@ exports.getDogBreed = () => prisma.breed.findMany();
 
 exports.findDogWithBreed = () =>
     prisma.dog.findMany({
+        where: {
+            status: {
+                not: "ADOPTED",
+            },
+        },
         include: {
             breed: true,
         },
     });
+
+exports.findDogWithPagination = (currentPage) => {
+    console.log(currentPage);
+    const PER_PAGE = 8;
+    return prisma.dog.findMany({
+        where: {
+            status: {
+                not: "ADOPTED",
+            },
+        },
+        take: PER_PAGE,
+        skip: (currentPage - 1) * PER_PAGE,
+    });
+};
 
 exports.upDateDogById = (data, id) =>
     prisma.dog.update({ data, where: { id } });
