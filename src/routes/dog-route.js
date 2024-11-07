@@ -18,6 +18,7 @@ router.get("/allDog", dogController.getAllDog);
 router.get("/profile/:dogId", dogController.getDogById);
 router.get("/search", dogController.searchDog);
 router.get("/alldog/:page", dogController.paginationDog);
+router.get("/totalPage", dogController.getTotalPage);
 
 router.patch(
     "/update/:dogId",
@@ -36,5 +37,5 @@ router.delete(
     dogController.deleteDogById
 );
 router.get("/relationship/:dogId", dogController.relationshipDog);
-router.get("/Pagination/:page");
+// router.get("/Pagination/:page");
 module.exports = router;

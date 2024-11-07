@@ -4,6 +4,8 @@ const catchError = require("../utils/catch-error");
 const dogService = require("../services/dog-service");
 const uploadService = require("../services/upload-service");
 
+const PER_PAGE = 8;
+
 exports.createDog = catchError(async (req, res, next) => {
     if (req.file) {
         req.body.profileImage = await uploadService.upload(req.file.path);
@@ -16,13 +18,13 @@ exports.createDog = catchError(async (req, res, next) => {
 });
 
 exports.getDogBreed = catchError(async (req, res, next) => {
-    const breed = await dogService.getDogBreed(req.body);
+    const breed = await dogService.getDogBreed();
 
     res.status(200).json({ breed });
 });
 
 exports.getAllDog = catchError(async (req, res, next) => {
-    const allDogWithBreed = await dogService.findDogWithBreed(req.body);
+    const allDogWithBreed = await dogService.findDogWithBreed();
     res.status(200).json({ allDogWithBreed });
 });
 
@@ -50,8 +52,18 @@ exports.searchDog = catchError(async (req, res, next) => {
 });
 
 exports.paginationDog = catchError(async (req, res, next) => {
-    const data = await dogService.findDogWithPagination(+req.params.page);
+    const data = await dogService.findDogWithPagination(
+        +req.params.page,
+        PER_PAGE
+    );
     res.status(200).json(data);
+});
+
+exports.getTotalPage = catchError(async (req, res, next) => {
+    const dogs = await dogService.findDogWithBreed();
+    const totalPage = Math.ceil(dogs.length / PER_PAGE);
+
+    res.status(200).json(totalPage);
 });
 
 exports.relationshipDog = catchError(async (req, res, next) => {

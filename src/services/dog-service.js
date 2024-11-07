@@ -16,9 +16,7 @@ exports.findDogWithBreed = () =>
         },
     });
 
-exports.findDogWithPagination = (currentPage) => {
-    console.log(currentPage);
-    const PER_PAGE = 8;
+exports.findDogWithPagination = (currentPage, PER_PAGE) => {
     return prisma.dog.findMany({
         where: {
             status: {
