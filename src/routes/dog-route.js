@@ -15,10 +15,12 @@ router.post(
 
 router.get("/getDogBreed", dogController.getDogBreed);
 router.get("/allDog", dogController.getAllDog);
+router.get("/exampleDog", dogController.getExampleDog);
 router.get("/profile/:dogId", dogController.getDogById);
 router.get("/search", dogController.searchDog);
 router.get("/alldog/:page", dogController.paginationDog);
 router.get("/totalPage", dogController.getTotalPage);
+router.get("/adoptedDog", dogController.getAdoptedDog);
 
 router.patch(
     "/update/:dogId",

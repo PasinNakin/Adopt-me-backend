@@ -28,6 +28,16 @@ exports.getAllDog = catchError(async (req, res, next) => {
     res.status(200).json({ allDogWithBreed });
 });
 
+exports.getExampleDog = catchError(async (req, res, next) => {
+    const exampleDog = await dogService.findDogExample();
+    res.status(200).json(exampleDog);
+});
+
+exports.getAdoptedDog = catchError(async (req, res, next) => {
+    const adoptedDog = await dogService.findAdoptedDog();
+    res.status(200).json(adoptedDog);
+});
+
 exports.getDogById = catchError(async (req, res, next) => {
     const dogWithId = await dogService.findDogById(+req.params.dogId);
     res.status(200).json({ dogWithId });

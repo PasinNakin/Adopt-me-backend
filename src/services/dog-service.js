@@ -2,7 +2,19 @@ const prisma = require("../models/prisma");
 
 exports.createDog = (data) => prisma.dog.create({ data });
 
-exports.getDogBreed = () => prisma.breed.findMany();
+exports.getDogBreed = () =>
+    prisma.breed.findMany({
+        orderBy: {
+            dogBreed: "asc",
+        },
+    });
+
+exports.findAdoptedDog = () =>
+    prisma.dog.findMany({
+        where: {
+            status: "ADOPTED",
+        },
+    });
 
 exports.findDogWithBreed = () =>
     prisma.dog.findMany({
@@ -14,6 +26,14 @@ exports.findDogWithBreed = () =>
         include: {
             breed: true,
         },
+    });
+
+exports.findDogExample = () =>
+    prisma.dog.findMany({
+        where: {
+            status: "AVAILABLE",
+        },
+        take: 4,
     });
 
 exports.findDogWithPagination = (currentPage, PER_PAGE) => {
@@ -45,6 +65,9 @@ exports.searchingDog = (searchData) => {
 
     return prisma.dog.findMany({
         where: {
+            status: {
+                not: "ADOPTED",
+            },
             AND: [...query],
         },
     });
