@@ -28,6 +28,10 @@ exports.findDogWithBreed = () =>
         },
     });
 
+exports.findDogRequest = () =>
+    prisma.dog.findMany({
+        where: { status: "PENDING" },
+    });
 exports.findDogExample = () =>
     prisma.dog.findMany({
         where: {

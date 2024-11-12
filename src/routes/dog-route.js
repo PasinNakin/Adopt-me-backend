@@ -14,6 +14,7 @@ router.post(
 );
 
 router.get("/getDogBreed", dogController.getDogBreed);
+router.get("/requestDog", dogController.getRequestDog);
 router.get("/allDog", dogController.getAllDog);
 router.get("/exampleDog", dogController.getExampleDog);
 router.get("/profile/:dogId", dogController.getDogById);

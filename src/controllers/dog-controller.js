@@ -38,6 +38,11 @@ exports.getAdoptedDog = catchError(async (req, res, next) => {
     res.status(200).json(adoptedDog);
 });
 
+exports.getRequestDog = catchError(async (req, res, next) => {
+    const dogRequest = await dogService.findDogRequest();
+    res.status(200).json(dogRequest);
+});
+
 exports.getDogById = catchError(async (req, res, next) => {
     const dogWithId = await dogService.findDogById(+req.params.dogId);
     res.status(200).json({ dogWithId });
