@@ -25,7 +25,7 @@ app.use("/adopt", authentiacate, adoptRoute);
 app.use(notFound);
 app.use(error);
 
-const PORT = process.env.PORT || 8008;
-app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+// const PORT = process.env.PORT || 8008;
+// app.listen(PORT, () => console.log(`server running on port ${PORT}`));
 
 module.exports = app;
