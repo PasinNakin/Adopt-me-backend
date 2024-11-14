@@ -1,5 +1,13 @@
 {
     "version": 2,
-    "builds": [{ "src": "src/app.js", "use": "@vercel/node" }],
+    "builds": [
+        {
+            "src": "src/app.js",
+            "use": "@vercel/node",
+            "env": {
+                "DATABASE_URL": "mysql://root:Guide1732@localhost:3306/cc16_adopt_me"
+            }
+        }
+    ],
     "routes": [{ "src": "/(.*)", "dest": "src/app.js" }]
 }
