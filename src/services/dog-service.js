@@ -53,7 +53,7 @@ exports.findDogWithPagination = (currentPage, PER_PAGE) => {
 };
 
 exports.upDateDogById = (data, id) =>
-    prisma.dog.update({ data, where: { id } });
+    prisma.dog.update({ data, where: { id }, include: { breed: true } });
 
 exports.findDogById = (id) =>
     prisma.dog.findUnique({ where: { id }, include: { breed: true } });
