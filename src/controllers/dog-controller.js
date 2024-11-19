@@ -2,6 +2,7 @@ const fs = require("fs/promises");
 
 const catchError = require("../utils/catch-error");
 const dogService = require("../services/dog-service");
+const adoptService = require("../services/adopt-service");
 const uploadService = require("../services/upload-service");
 
 const PER_PAGE = 8;
@@ -54,7 +55,13 @@ exports.updateDogById = catchError(async (req, res, next) => {
 });
 
 exports.deleteDogById = catchError(async (req, res, next) => {
-    const deleteDog = await dogService.deleteDogById(+req.params.dogId);
+    const dogId = +req.params.dogId;
+    const existAdopt = await adoptService.checkExistAdopt(dogId);
+    if (existAdopt) {
+        const adoptDelete = await adoptService.deleteAdopt(dogId);
+        console.log(adoptDelete);
+    }
+    const deleteDog = await dogService.deleteDogById(dogId);
     res.status(200).json(deleteDog);
 });
 
